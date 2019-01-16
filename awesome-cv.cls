@@ -74,7 +74,7 @@
 \RequirePackage{unicode-math}
 % Needed to use icons from font-awesome
 % (https://github.com/posquit0/latex-fontawesome)
-\RequirePackage{fontawesome}
+\RequirePackage{fontawesome5}
 \RequirePackage[default,opentype]{sourcesanspro}
 % Needed for the photo ID
 \RequirePackage[skins]{tcolorbox}
@@ -254,7 +254,7 @@
 \def\@photoedge{edge}
 \def\@photoalign{left}
 
-% Define writer's name
+% Define writer's legal name
 % Usage: \name{<firstname>}{<lastname>}
 % Usage: \firstname{<firstname>}
 % Usage: \lastname{<lastname>}
@@ -264,6 +264,21 @@
 \newcommand*{\lastname}[1]{\def\@lastname{#1}}
 \newcommand*{\familyname}[1]{\def\@lastname{#1}}
 \def\@familyname{\@lastname}
+
+% Define writer's preffered name
+% Usage: \pname{<firstname>}{<lastname>}
+% Usage: \pfirstname{<firstname>}
+% Usage: \plastname{<lastname>}
+% Usage: \pfamilyname{<familyname>}
+\newcommand*{\pname}[2]{\def\@pfirstname{#1}\def\@plastname{#2}}
+\newcommand*{\pfirstname}[1]{\def\@pfirstname{#1}}
+\newcommand*{\plastname}[1]{\def\@plastname{#1}}
+\newcommand*{\pfamilyname}[1]{\def\@plastname{#1}}
+\def\@pfamilyname{\@plastname}
+
+% Defines writer's pronouns (optional)
+% Usage: \pronouns{singular}{thirdperson}
+\newcommand*{\pronouns}[2]{\def\@spronoun{#1}\def\@thirdpronoun{#2}}
 
 % Define writer's address
 % Usage: \address{<address>}
@@ -448,8 +463,12 @@
   \end{minipage}
   \begin{minipage}[c]{\headertextwidth}
     \ifthenelse{\equal{#1}{L}}{\raggedright}{\ifthenelse{\equal{#1}{R}}{\raggedleft}{\centering}}
+    Legal name:
     \headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
+    \\[\acvHeaderAfterNameSkip]Preferred name:%
     \\[\acvHeaderAfterNameSkip]%
+    \headerfirstnamestyle{\@pfirstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@plastname}%
+    /home/alc/git/keybase/resume/awesome-cv.cls
     \ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
     \ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
     \headersocialstyle{%
@@ -532,6 +551,17 @@
         {%
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
           \href{https://scholar.google.com/citations?user=\@googlescholarid}{\faGraduationCap\acvHeaderIconSep\@googlescholarname}%
+        }%
+      \ifthenelse{\isundefined{\@spronoun}}%
+        {}%
+        {%
+          \ifbool{isstart}%
+            {%
+              \setbool{istart}{false} %
+            }%
+            {\acvHeaderSocialSep}%
+          \faGenderless\acvHeaderIconSep\@spronoun/\@thirdpronoun%
+        }%
         }%
       \ifthenelse{\isundefined{\@extrainfo}}%
         {}%
