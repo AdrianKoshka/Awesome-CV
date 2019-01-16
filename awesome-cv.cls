@@ -464,11 +464,12 @@
   \begin{minipage}[c]{\headertextwidth}
     \ifthenelse{\equal{#1}{L}}{\raggedright}{\ifthenelse{\equal{#1}{R}}{\raggedleft}{\centering}}
     Legal name:
+    \\[\acvHeaderAfterNameSkip]%
     \headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
     \\[\acvHeaderAfterNameSkip]Preferred name:%
     \\[\acvHeaderAfterNameSkip]%
     \headerfirstnamestyle{\@pfirstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@plastname}%
-    /home/alc/git/keybase/resume/awesome-cv.cls
+    \\[\acvHeaderAfterNameSkip]%
     \ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
     \ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
     \headersocialstyle{%
@@ -561,7 +562,6 @@
             }%
             {\acvHeaderSocialSep}%
           \faGenderless\acvHeaderIconSep\@spronoun/\@thirdpronoun%
-        }%
         }%
       \ifthenelse{\isundefined{\@extrainfo}}%
         {}%
@@ -754,7 +754,7 @@
 \newcommand*{\makeletterclosing}{%
   \vspace{3.4mm}
   \lettertextstyle{\@letterclosing} \\\\
-  \letternamestyle{\@firstname\ \@lastname}
+  \letternamestyle{\@pfirstname\ \@plastname}
   \ifthenelse{\isundefined{\@letterenclosure}}
     {\\}
     {%
